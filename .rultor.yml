@@ -1,0 +1,20 @@
+architect:
+  - aliceice
+
+docker:
+  image: "maven:3.3.3-jdk-8"
+
+install:
+  - "java -version"
+  - "mvn --version"
+  - "mvn clean install -DskipTests"
+
+merge:
+  script:
+    - "mvn clean verify -Pcode-quality"
+
+release:
+  script:
+    - "mvn versions:set \"-DnewVersion=${tag}\""
+    - "git commit -am \"${tag}\""
+    - "mvn clean verify -Pcode-quality"
