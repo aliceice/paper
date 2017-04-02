@@ -3,29 +3,29 @@ package de.aliceice.paper;
 import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.Map;
 
-public final class Field {
+public class Field {
     
-    public void printOn(Paper paper) {
+    public final void printOn(Paper paper) {
         paper.printField(this.name, this.rules.getDescription());
     }
     
-    public Boolean isNotValid() {
+    public final Boolean isNotValid() {
         return this.rules.areNotValid(this.text);
     }
     
-    public void markErrorOn(Paper paper) {
+    public final void markErrorOn(Paper paper) {
         paper.markErrorOn(this.name);
     }
     
-    public Boolean matches(String name) {
+    public final Boolean matches(String name) {
         return this.name.equals(name);
     }
     
-    public void write(String text) {
+    public final void write(String text) {
         this.text = text;
     }
     
-    public Map.Entry<String, String> asMapEntry() {
+    public final Map.Entry<String, String> asMapEntry() {
         return new SimpleImmutableEntry<>(this.name, this.text);
     }
     
