@@ -1,10 +1,10 @@
 package de.aliceice.paper;
 
-public final class FixedLengthRule implements Rule {
+public final class FixedLengthRule extends LocalizedRule {
     
     @Override
-    public String getDescription() {
-        return String.format("Fixed length %d", this.length);
+    protected Object[] getDescriptionArguments() {
+        return new Object[] {this.length};
     }
     
     @Override

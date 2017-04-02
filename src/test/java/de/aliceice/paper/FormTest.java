@@ -2,11 +2,13 @@ package de.aliceice.paper;
 
 import java.util.concurrent.atomic.AtomicReference;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@ExtendWith(EnglishLocaleExtension.class)
 public final class FormTest {
     
     @Test
@@ -28,7 +30,7 @@ public final class FormTest {
     @Test
     public void printOnPaperPrintsAllFields() throws Exception {
         this.subject.printOn(this.paper);
-        
+    
         this.paper.hasField("Field 1", "Mandatory", "Max length 5");
         this.paper.hasField("Field 2", "Mandatory", "Fixed length 12");
     }

@@ -1,10 +1,10 @@
 package de.aliceice.paper;
 
-public final class MaxLengthRule implements Rule {
+public final class MaxLengthRule extends LocalizedRule {
     
     @Override
-    public String getDescription() {
-        return String.format("Max length %d", this.length);
+    protected Object[] getDescriptionArguments() {
+        return new Object[] {this.length};
     }
     
     @Override
