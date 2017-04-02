@@ -3,10 +3,6 @@ language: java
 git:
   depth: 1
 
-branches:
-  only:
-    - /^issue\/.*$/
-
 before_install:
   - jdk_switcher use oraclejdk8
 
