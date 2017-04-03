@@ -5,7 +5,7 @@ decrypt:
   settings.xml: "repo/settings.xml.asc"
   pubring.gpg: "repo/pubring.gpg.asc"
   secring.gpg: "repo/secring.gpg.asc"
-g
+
 docker:
   image: "maven:3.3.3-jdk-8"
 
