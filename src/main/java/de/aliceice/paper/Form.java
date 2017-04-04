@@ -40,10 +40,12 @@ public class Form {
         this.name = name;
         this.description = description;
         this.fields = fields;
+        this.onSubmit = __ -> {};
     }
     
-    private final String                        name;
-    private final String                        description;
-    private final Fields                        fields;
-    private       Consumer<Map<String, String>> onSubmit = fields -> {};
+    private final String name;
+    private final String description;
+    private final Fields fields;
+    
+    private Consumer<Map<String, String>> onSubmit;
 }
