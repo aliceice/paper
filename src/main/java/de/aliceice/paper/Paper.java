@@ -11,4 +11,6 @@ public interface Paper {
     void markAsInvalid();
     
     void markErrorOn(String fieldName);
+    
+    void copyTo(Form form);
 }

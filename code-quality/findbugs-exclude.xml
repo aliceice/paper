@@ -1,3 +1,5 @@
 <FindBugsFilter>
 
+    <Bug pattern="DM_DEFAULT_ENCODING"/>
+
 </FindBugsFilter>

@@ -67,8 +67,9 @@ public final class FormTest {
     }
     
     private void fillOutForm() {
-        this.subject.write("Field 1", "Hi");
-        this.subject.write("Field 2", "Hello World!");
+        this.paper.write("Field 1", "Hi");
+        this.paper.write("Field 2", "Hello World!");
+        this.paper.copyTo(this.subject);
     }
     
     private final Form      subject = new Form("Test Form",

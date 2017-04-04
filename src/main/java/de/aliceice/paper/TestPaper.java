@@ -37,6 +37,11 @@ public final class TestPaper implements Paper {
         this.markedFields.add(fieldName);
     }
     
+    @Override
+    public void copyTo(Form form) {
+        this.fieldValues.forEach(form::write);
+    }
+    
     public void hasTitle(String title) {
         assertEquals(title, this.name);
     }
@@ -66,9 +71,14 @@ public final class TestPaper implements Paper {
         });
     }
     
+    public void write(String fieldName, String value) {
+        this.fieldValues.put(fieldName, value);
+    }
+    
     private String              name            = "";
     private String              description     = "";
     private Map<String, String> printedFields   = new HashMap<>();
+    private Map<String, String> fieldValues     = new HashMap<>();
     private Boolean             isMarkedInvalid = false;
     private List<String>        markedFields    = new ArrayList<>();
 }
