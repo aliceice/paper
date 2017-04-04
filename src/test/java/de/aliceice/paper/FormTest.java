@@ -71,7 +71,7 @@ public final class FormTest {
         this.subject.write("Field 2", "Hello World!");
     }
     
-    private final Form  subject = new Form("Test Form",
+    private final Form      subject = new Form("Test Form",
                                            "Testing a form",
                                            new Fields(new Field("Field 1",
                                                                 new MandatoryRule(),
@@ -79,5 +79,5 @@ public final class FormTest {
                                                       new Field("Field 2",
                                                                 new MandatoryRule(),
                                                                 new FixedLengthRule(12))));
-    private final Paper paper   = new Paper();
+    private final TestPaper paper   = new TestPaper();
 }
