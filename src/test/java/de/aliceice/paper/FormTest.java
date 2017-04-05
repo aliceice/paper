@@ -65,6 +65,11 @@ public final class FormTest {
         
         assertEquals("{Field 1=Hi, Field 2=Hello World!}", reference.get());
     }
+
+    @Test
+    public void namesItselfToStrangers() throws Exception {
+        assertEquals("Test Form", this.subject.getName());
+    }
     
     private void fillOutForm() {
         this.paper.write("Field 1", "Hi");

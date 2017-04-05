@@ -31,7 +31,11 @@ public class Form {
     public final void submit() {
         this.onSubmit.accept(this.fields.asMap());
     }
-    
+
+    public final String getName() {
+        return this.name;
+    }
+
     public Form(String name, Fields fields) {
         this(name, "", fields);
     }
@@ -48,4 +52,5 @@ public class Form {
     private final Fields fields;
     
     private Consumer<Map<String, String>> onSubmit;
+
 }
