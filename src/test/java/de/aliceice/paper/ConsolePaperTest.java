@@ -65,7 +65,7 @@ public final class ConsolePaperTest {
     }
     
     /**
-     * @todo: #26 write(name, text) must be implemented for ConsolePaper.
+     * @todo #26 write(name, text) must be implemented for ConsolePaper.
      */
     @Test
     public void write() throws Exception {
