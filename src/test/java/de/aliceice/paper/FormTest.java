@@ -38,6 +38,7 @@ public final class FormTest {
     @Test
     public void isValidIsFalseIfNothingHasBeenWrittenIntoTheForm() throws Exception {
         assertFalse(this.subject.isValid());
+        assertTrue(this.subject.isNotValid());
         
         this.subject.markErrorsOn(this.paper);
         
@@ -49,6 +50,7 @@ public final class FormTest {
     public void isValidIsTrueWhenAllFieldsAreFilledCorrectly() throws Exception {
         fillOutForm();
         assertTrue(this.subject.isValid());
+        assertFalse(this.subject.isNotValid());
     }
     
     @Test
