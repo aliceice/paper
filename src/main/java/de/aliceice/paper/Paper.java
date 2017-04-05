@@ -13,4 +13,6 @@ public interface Paper {
     void markErrorOn(String fieldName);
     
     void copyTo(Form form);
+    
+    Paper write(String name, String text);
 }

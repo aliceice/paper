@@ -36,6 +36,16 @@ public final class FormTest {
     }
     
     @Test
+    public void aFilledOutFormPrintsValuesToPaper() throws Exception {
+        this.subject.write("Field 1", "Value 1");
+        this.subject.write("Field 2", "Value 2");
+        this.subject.printOn(this.paper);
+        
+        this.paper.hasFieldValue("Field 1", "Value 1")
+                  .hasFieldValue("Field 2", "Value 2");
+    }
+    
+    @Test
     public void isValidIsFalseIfNothingHasBeenWrittenIntoTheForm() throws Exception {
         assertFalse(this.subject.isValid());
         assertTrue(this.subject.isNotValid());
@@ -67,7 +77,7 @@ public final class FormTest {
         
         assertEquals("{Field 1=Hi, Field 2=Hello World!}", reference.get());
     }
-
+    
     @Test
     public void namesItselfToStrangers() throws Exception {
         assertEquals("Test Form", this.subject.getName());

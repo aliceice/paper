@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(EnglishLocaleExtension.class)
@@ -61,6 +62,15 @@ public final class ConsolePaperTest {
         
         System.setIn(oldIn);
         System.setOut(oldOut);
+    }
+    
+    /**
+     * @todo: #26 write(name, text) must be implemented for ConsolePaper.
+     */
+    @Test
+    public void write() throws Exception {
+        ConsolePaper subject = new ConsolePaper();
+        assertSame(subject, subject.write("", ""));
     }
     
     private final Form form = new TestForm();

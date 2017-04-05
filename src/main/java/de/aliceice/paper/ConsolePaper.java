@@ -42,6 +42,11 @@ public final class ConsolePaper implements Paper {
         this.fieldValues.forEach(form::write);
     }
     
+    @Override
+    public Paper write(String name, String text) {
+        return this;
+    }
+    
     public ConsolePaper() {
         this(System.in, System.out);
     }

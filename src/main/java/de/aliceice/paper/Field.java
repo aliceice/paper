@@ -7,6 +7,7 @@ public class Field {
     
     public final void printOn(Paper paper) {
         paper.printField(this.name, this.rules.getDescription());
+        paper.write(this.name, this.text);
     }
     
     public final Boolean isNotValid() {

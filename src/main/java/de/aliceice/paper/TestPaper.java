@@ -42,6 +42,12 @@ public final class TestPaper implements Paper {
         this.fieldValues.forEach(form::write);
     }
     
+    @Override
+    public TestPaper write(String fieldName, String value) {
+        this.fieldValues.put(fieldName, value);
+        return this;
+    }
+    
     public TestPaper hasTitle(String title) {
         assertEquals(title, this.name);
         return this;
@@ -61,6 +67,14 @@ public final class TestPaper implements Paper {
         return this;
     }
     
+    public TestPaper hasFieldValue(String name, String value) {
+        assertTrue(this.fieldValues.containsKey(name),
+                   String.format("%s has no value.%n Available fields are: %s",
+                                 name, this.fieldValues.keySet()));
+        assertEquals(value, this.fieldValues.get(name));
+        return this;
+    }
+    
     public TestPaper isMarkedInvalid() {
         assertTrue(this.isMarkedInvalid);
         return this;
@@ -72,11 +86,6 @@ public final class TestPaper implements Paper {
                        String.format("%s is not marked as invalid. Marked fields are: %s",
                                      field, this.markedFields));
         });
-        return this;
-    }
-    
-    public TestPaper write(String fieldName, String value) {
-        this.fieldValues.put(fieldName, value);
         return this;
     }
     
