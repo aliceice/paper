@@ -42,37 +42,42 @@ public final class TestPaper implements Paper {
         this.fieldValues.forEach(form::write);
     }
     
-    public void hasTitle(String title) {
+    public TestPaper hasTitle(String title) {
         assertEquals(title, this.name);
+        return this;
     }
     
-    public void hasDescription(String description) {
+    public TestPaper hasDescription(String description) {
         assertEquals(description, this.description);
+        return this;
     }
     
-    public void hasField(String name, String... rules) {
+    public TestPaper hasField(String name, String... rules) {
         assertTrue(this.printedFields.containsKey(name),
                    String.format("%s is not printed.%n Available fields are: %s",
                                  name, this.printedFields.keySet()));
         assertEquals(Stream.of(rules).collect(Collectors.joining(System.lineSeparator())),
                      this.printedFields.get(name));
-        
+        return this;
     }
     
-    public void isMarkedInvalid() {
+    public TestPaper isMarkedInvalid() {
         assertTrue(this.isMarkedInvalid);
+        return this;
     }
     
-    public void hasMarkedFields(String... fields) {
+    public TestPaper hasMarkedFields(String... fields) {
         Stream.of(fields).forEach(field -> {
             assertTrue(this.markedFields.contains(field),
                        String.format("%s is not marked as invalid. Marked fields are: %s",
                                      field, this.markedFields));
         });
+        return this;
     }
     
-    public void write(String fieldName, String value) {
+    public TestPaper write(String fieldName, String value) {
         this.fieldValues.put(fieldName, value);
+        return this;
     }
     
     private String              name            = "";

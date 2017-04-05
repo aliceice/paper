@@ -15,24 +15,24 @@ public final class FormTest {
     public void canCreateFormWithoutDescription() throws Exception {
         new Form("Form without description", new Fields()).printOn(this.paper);
         
-        this.paper.hasTitle("Form without description");
-        this.paper.hasDescription("");
+        this.paper.hasTitle("Form without description")
+                  .hasDescription("");
     }
     
     @Test
     public void printOnPaperPrintsTitleAndDescription() throws Exception {
         this.subject.printOn(this.paper);
         
-        this.paper.hasTitle("Test Form");
-        this.paper.hasDescription("Testing a form");
+        this.paper.hasTitle("Test Form")
+                  .hasDescription("Testing a form");
     }
     
     @Test
     public void printOnPaperPrintsAllFields() throws Exception {
         this.subject.printOn(this.paper);
-    
-        this.paper.hasField("Field 1", "Mandatory", "Max length 5");
-        this.paper.hasField("Field 2", "Mandatory", "Fixed length 12");
+        
+        this.paper.hasField("Field 1", "Mandatory", "Max length 5")
+                  .hasField("Field 2", "Mandatory", "Fixed length 12");
     }
     
     @Test
@@ -42,8 +42,8 @@ public final class FormTest {
         
         this.subject.markErrorsOn(this.paper);
         
-        this.paper.isMarkedInvalid();
-        this.paper.hasMarkedFields("Field 1", "Field 2");
+        this.paper.isMarkedInvalid()
+                  .hasMarkedFields("Field 1", "Field 2");
     }
     
     @Test
@@ -56,7 +56,7 @@ public final class FormTest {
     @Test
     public void executesOnSubmitActionIfSubmitIsTriggered() throws Exception {
         AtomicReference<String> reference = new AtomicReference<>("");
-    
+        
         fillOutForm();
         this.subject.submit();
         
@@ -74,18 +74,18 @@ public final class FormTest {
     }
     
     private void fillOutForm() {
-        this.paper.write("Field 1", "Hi");
-        this.paper.write("Field 2", "Hello World!");
-        this.paper.copyTo(this.subject);
+        this.paper.write("Field 1", "Hi")
+                  .write("Field 2", "Hello World!")
+                  .copyTo(this.subject);
     }
     
     private final Form      subject = new Form("Test Form",
-                                           "Testing a form",
-                                           new Fields(new Field("Field 1",
-                                                                new MandatoryRule(),
-                                                                new MaxLengthRule(5)),
-                                                      new Field("Field 2",
-                                                                new MandatoryRule(),
-                                                                new FixedLengthRule(12))));
+                                               "Testing a form",
+                                               new Fields(new Field("Field 1",
+                                                                    new MandatoryRule(),
+                                                                    new MaxLengthRule(5)),
+                                                          new Field("Field 2",
+                                                                    new MandatoryRule(),
+                                                                    new FixedLengthRule(12))));
     private final TestPaper paper   = new TestPaper();
 }
