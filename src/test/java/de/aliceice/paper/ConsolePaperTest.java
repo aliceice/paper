@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(EnglishLocaleExtension.class)
@@ -20,6 +19,7 @@ public final class ConsolePaperTest {
         ConsolePaper subject = new ConsolePaper(new ByteArrayInputStream(String.format("Value%n").getBytes()), out);
         
         this.form.printOn(subject);
+        subject.askForInput();
         subject.copyTo(this.form);
         
         assertEquals(String.format("Test Form%n" +
@@ -64,13 +64,24 @@ public final class ConsolePaperTest {
         System.setOut(oldOut);
     }
     
-    /**
-     * @todo #26 write(name, text) must be implemented for ConsolePaper.
-     */
     @Test
     public void write() throws Exception {
-        ConsolePaper subject = new ConsolePaper();
-        assertSame(subject, subject.write("", ""));
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        ConsolePaper subject = new ConsolePaper(new ByteArrayInputStream(System.lineSeparator().getBytes()),
+                                                new PrintStream(out));
+        
+        this.form.write("Test Field", "Pre-Filled Value");
+        this.form.printOn(subject);
+        
+        subject.askForInput();
+        
+        assertEquals(String.format("Test Form%n" +
+                                   "Test Description%n" +
+                                   "%n" +
+                                   "Test Field (Currently 'Pre-Filled Value'): "), out.toString());
+        
+        this.form.onSubmit(fields -> assertEquals("Pre-Filled Value", fields.get("Test Field")));
+        this.form.submit();
     }
     
     private final Form form = new TestForm();

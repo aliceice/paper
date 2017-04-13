@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -22,9 +23,7 @@ public final class ConsolePaper implements Paper {
     
     @Override
     public void printField(String name, String description) {
-        this.fieldDescriptions.put(name, description);
-        this.out.printf("%s: ", name);
-        this.fieldValues.put(name, this.in.nextLine());
+        this.fields.put(name, description);
     }
     
     @Override
@@ -34,7 +33,7 @@ public final class ConsolePaper implements Paper {
     
     @Override
     public void markErrorOn(String fieldName) {
-        this.out.printf("  - %s: %s", fieldName, this.fieldDescriptions.get(fieldName));
+        this.out.printf("  - %s: %s", fieldName, this.fields.get(fieldName));
     }
     
     @Override
@@ -44,7 +43,24 @@ public final class ConsolePaper implements Paper {
     
     @Override
     public Paper write(String name, String text) {
+        this.fieldValues.put(name, text);
         return this;
+    }
+    
+    public void askForInput() {
+        this.fields.keySet()
+                   .forEach(field -> {
+                       this.out.printf(getPromptTemplate(field),
+                                       field,
+                                       this.fieldValues.get(field));
+            
+                       String value = this.in.nextLine();
+                       this.fieldValues.merge(field,
+                                              value,
+                                              (oldValue, newValue) -> newValue.isEmpty()
+                                                                      ? oldValue
+                                                                      : newValue);
+                   });
     }
     
     public ConsolePaper() {
@@ -54,12 +70,19 @@ public final class ConsolePaper implements Paper {
     public ConsolePaper(InputStream in, OutputStream out) {
         this.in = new Scanner(in);
         this.out = new PrintWriter(out, true);
+        this.fields = new LinkedHashMap<>();
         this.fieldValues = new HashMap<>();
-        this.fieldDescriptions = new HashMap<>();
     }
     
+    private String getPromptTemplate(String field) {
+        if (!this.fieldValues.getOrDefault(field, "")
+                             .isEmpty()) {
+            return "%s (Currently '%s'): ";
+        }
+        return "%s: ";
+    }
     private final Scanner             in;
     private final PrintWriter         out;
+    private final Map<String, String> fields;
     private final Map<String, String> fieldValues;
-    private final Map<String, String> fieldDescriptions;
 }
