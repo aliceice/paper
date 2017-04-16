@@ -44,10 +44,6 @@
         </snapshotRepository>
     </distributionManagement>
 
-    <prerequisites>
-        <maven>3.0.0</maven>
-    </prerequisites>
-
     <properties>
         <project.code-quality.dir>${user.dir}/code-quality</project.code-quality.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -348,7 +344,7 @@
                         <inherited>true</inherited>
                         <configuration>
                             <excludes>
-                                <exclude>de/aice/lang/util/Exceptions.class</exclude>
+                                <exclude>de/aliceice/paper/SystemConsole.class</exclude>
                             </excludes>
                         </configuration>
                         <executions>

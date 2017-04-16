@@ -2,23 +2,21 @@ package de.aliceice.paper;
 
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Scanner;
 
 public final class ConsolePaper implements Paper {
     
     @Override
     public void printTitle(String title) {
-        this.out.println(title);
+        this.console.println(title);
     }
     
     @Override
     public void printDescription(String description) {
-        this.out.println(description);
-        this.out.println();
+        this.console.println(description);
+        this.console.println();
     }
     
     @Override
@@ -28,12 +26,12 @@ public final class ConsolePaper implements Paper {
     
     @Override
     public void markAsInvalid() {
-        this.out.println("There are errors on the form:");
+        this.console.println("There are errors on the form:");
     }
     
     @Override
     public void markErrorOn(String fieldName) {
-        this.out.printf("  - %s: %s", fieldName, this.fields.get(fieldName));
+        this.console.printf("  - %s: %s", fieldName, this.fields.get(fieldName));
     }
     
     @Override
@@ -50,11 +48,11 @@ public final class ConsolePaper implements Paper {
     public void askForInput() {
         this.fields.keySet()
                    .forEach(field -> {
-                       this.out.printf(getPromptTemplate(field),
-                                       field,
-                                       this.fieldValues.get(field));
+                       this.console.printf(getPromptTemplate(field),
+                                           field,
+                                           this.fieldValues.get(field));
             
-                       String value = this.in.nextLine();
+                       String value = this.console.readLine();
                        this.fieldValues.merge(field,
                                               value,
                                               (oldValue, newValue) -> newValue.isEmpty()
@@ -64,12 +62,15 @@ public final class ConsolePaper implements Paper {
     }
     
     public ConsolePaper() {
-        this(System.in, System.out);
+        this(new IOStreamConsole());
     }
     
     public ConsolePaper(InputStream in, OutputStream out) {
-        this.in = new Scanner(in);
-        this.out = new PrintWriter(out, true);
+        this(new IOStreamConsole(in, out));
+    }
+    
+    public ConsolePaper(Console console) {
+        this.console = console;
         this.fields = new LinkedHashMap<>();
         this.fieldValues = new HashMap<>();
     }
@@ -81,8 +82,8 @@ public final class ConsolePaper implements Paper {
         }
         return "%s: ";
     }
-    private final Scanner             in;
-    private final PrintWriter         out;
+    
+    private final Console             console;
     private final Map<String, String> fields;
     private final Map<String, String> fieldValues;
 }
