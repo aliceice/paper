@@ -16,3 +16,6 @@ install:
 
 script:
   - "mvn clean verify -Pcode-quality"
+
+after_success:
+    - bash <(curl -s https://codecov.io/bash)
