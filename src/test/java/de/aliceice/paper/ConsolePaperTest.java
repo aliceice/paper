@@ -43,7 +43,7 @@ public final class ConsolePaperTest {
         this.form.markErrorsOn(subject);
         
         assertEquals(String.format("There are errors on the form:%n" +
-                                   "  - Test Field: Mandatory"),
+                                   "  - Test Field: Mandatory%n"),
                      out.toString());
     }
     

@@ -31,7 +31,7 @@ public final class ConsolePaper implements Paper {
     
     @Override
     public void markErrorOn(String fieldName) {
-        this.console.printf("  - %s: %s", fieldName, this.fields.get(fieldName));
+        this.console.printf("  - %s: %s%n", fieldName, this.fields.get(fieldName));
     }
     
     @Override
