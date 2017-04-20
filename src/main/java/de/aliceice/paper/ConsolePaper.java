@@ -1,7 +1,5 @@
 package de.aliceice.paper;
 
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -63,10 +61,6 @@ public final class ConsolePaper implements Paper {
     
     public ConsolePaper() {
         this(new IOStreamConsole());
-    }
-    
-    public ConsolePaper(InputStream in, OutputStream out) {
-        this(new IOStreamConsole(in, out));
     }
     
     public ConsolePaper(Console console) {
