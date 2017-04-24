@@ -41,7 +41,8 @@ public final class ConsolePaperTest {
                                "Test Description%n" +
                                "%n" +
                                "There are errors on the form:%n" +
-                               "  - Test Field: Mandatory%n");
+                               "  - Test Field: Mandatory%n" +
+                               "%n");
     }
     
     @Test

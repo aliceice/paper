@@ -23,6 +23,11 @@ public final class IOStreamConsole implements Console {
     }
     
     @Override
+    public void printErr(String error) {
+        this.err.println(error);
+    }
+    
+    @Override
     public String readLine(String format, Object... args) {
         this.out.printf(format, args);
         return this.in.nextLine();
@@ -32,11 +37,29 @@ public final class IOStreamConsole implements Console {
         this(System.in, System.out);
     }
     
+    public IOStreamConsole(OutputStream out) {
+        this(System.in, out, System.err);
+    }
+    
+    public IOStreamConsole(OutputStream out, OutputStream err) {
+        this(System.in, out, err);
+    }
+    
+    public IOStreamConsole(InputStream in) {
+        this(in, System.out, System.err);
+    }
+    
     public IOStreamConsole(InputStream in, OutputStream out) {
+        this(in, out, System.err);
+    }
+    
+    public IOStreamConsole(InputStream in, OutputStream out, OutputStream err) {
         this.in = new Scanner(in);
         this.out = new PrintWriter(out, true);
+        this.err = new PrintWriter(err, true);
     }
     
     private final Scanner     in;
     private final PrintWriter out;
+    private final PrintWriter err;
 }

@@ -23,6 +23,12 @@ public final class TestConsole implements Console {
     }
     
     @Override
+    public void printErr(String error) {
+        this.output.append(error)
+                   .append(System.lineSeparator());
+    }
+    
+    @Override
     public String readLine(String format, Object... args) {
         this.output.append(String.format(format, args))
                    .append(this.inputLines.peekFirst())
