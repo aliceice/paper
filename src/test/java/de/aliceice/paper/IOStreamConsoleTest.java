@@ -30,7 +30,7 @@ public final class IOStreamConsoleTest {
         
         subject.printErr("An error occurred: %s", "Error");
         
-        assertEquals(String.format("An error occurred: Error%n"), err.toString());
+        assertEquals("An error occurred: Error", err.toString());
     }
     
     @Test

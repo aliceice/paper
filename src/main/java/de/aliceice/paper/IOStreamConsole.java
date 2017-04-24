@@ -24,7 +24,7 @@ public final class IOStreamConsole implements Console {
     
     @Override
     public void printErr(String error) {
-        this.err.println(error);
+        this.err.printf(error);
     }
     
     @Override

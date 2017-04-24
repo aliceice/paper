@@ -24,8 +24,7 @@ public final class TestConsole implements Console {
     
     @Override
     public void printErr(String error) {
-        this.output.append(error)
-                   .append(System.lineSeparator());
+        this.output.append(error);
     }
     
     @Override
