@@ -3,6 +3,8 @@ package de.aliceice.paper;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public final class ConsolePaper implements Paper {
     
@@ -19,7 +21,8 @@ public final class ConsolePaper implements Paper {
     
     @Override
     public void printField(String name, String description) {
-        this.fields.put(name, description);
+        this.fieldDescriptions.put(name, Stream.of(description.split(System.lineSeparator()))
+                                               .collect(Collectors.joining(", ")));
     }
     
     @Override
@@ -29,7 +32,7 @@ public final class ConsolePaper implements Paper {
     
     @Override
     public void markErrorOn(String fieldName) {
-        this.console.printErr("  - %s: %s%n", fieldName, this.fields.get(fieldName));
+        this.console.printErr("  - %s: %s%n", fieldName, this.fieldDescriptions.get(fieldName));
     }
     
     @Override
@@ -44,19 +47,19 @@ public final class ConsolePaper implements Paper {
     }
     
     public void askForInput() {
-        this.fields.keySet()
-                   .forEach(field -> {
-                       this.console.printf(getPromptTemplate(field),
-                                           field,
-                                           this.fieldValues.get(field));
+        this.fieldDescriptions.keySet()
+                              .forEach(field -> {
+                                  this.console.printf(getPromptTemplate(field),
+                                                      field,
+                                                      this.fieldValues.get(field));
             
-                       String value = this.console.readLine();
-                       this.fieldValues.merge(field,
-                                              value,
-                                              (oldValue, newValue) -> newValue.isEmpty()
-                                                                      ? oldValue
-                                                                      : newValue);
-                   });
+                                  String value = this.console.readLine();
+                                  this.fieldValues.merge(field,
+                                                         value,
+                                                         (oldValue, newValue) -> newValue.isEmpty()
+                                                                                 ? oldValue
+                                                                                 : newValue);
+                              });
     }
     
     public ConsolePaper() {
@@ -65,7 +68,7 @@ public final class ConsolePaper implements Paper {
     
     public ConsolePaper(Console console) {
         this.console = console;
-        this.fields = new LinkedHashMap<>();
+        this.fieldDescriptions = new LinkedHashMap<>();
         this.fieldValues = new HashMap<>();
     }
     
@@ -78,6 +81,6 @@ public final class ConsolePaper implements Paper {
     }
     
     private final Console             console;
-    private final Map<String, String> fields;
+    private final Map<String, String> fieldDescriptions;
     private final Map<String, String> fieldValues;
 }
