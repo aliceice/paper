@@ -20,4 +20,9 @@ public interface Console {
     
     String readLine(String format, Object... args);
     
+    default String readSecret() {
+        return readSecret("");
+    }
+    
+    String readSecret(String format, Object... args);
 }

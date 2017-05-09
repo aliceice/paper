@@ -29,8 +29,14 @@ public final class IOStreamConsole implements Console {
     
     @Override
     public String readLine(String format, Object... args) {
-        this.out.printf(format, args);
+        printf(format, args);
         return this.in.nextLine();
+    }
+    
+    @Override
+    public String readSecret(String format, Object... args) {
+        println("WARNING: I/O Stream Console can't hide secrets. All input will be visible.");
+        return readLine(format, args);
     }
     
     public IOStreamConsole() {

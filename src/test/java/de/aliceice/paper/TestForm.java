@@ -7,6 +7,8 @@ public final class TestForm extends Form {
               "Test Description",
               new Fields(new Field("Test Field",
                                    new MandatoryRule(),
-                                   new MaxLengthRule(5))));
+                                   new MaxLengthRule(5)),
+                         new Field("Secret Field",
+                                   new SecretRule())));
     }
 }

@@ -15,7 +15,7 @@ public final class ConsolePaperTest {
     
     @Test
     public void printsOutputAndReadsFromInput() throws Exception {
-        this.console.useAsInput("Value");
+        this.console.useAsInput("Value", "Secret");
         
         this.form.printOn(subject);
         this.subject.askForInput();
@@ -23,10 +23,14 @@ public final class ConsolePaperTest {
         
         this.console.hasOutput("Test Form%n" +
                                "Test Description%n%n" +
-                               "Test Field: Value%n");
+                               "Test Field: Value%n" +
+                               "Secret Field: ***%n");
         
         assertTrue(this.form.isValid());
-        this.form.onSubmit(fields -> assertEquals("Value", fields.get("Test Field")));
+        this.form.onSubmit(fields -> {
+            assertEquals("Value", fields.get("Test Field"));
+            assertEquals("Secret", fields.get("Secret Field"));
+        });
         this.form.submit();
     }
     
@@ -49,12 +53,15 @@ public final class ConsolePaperTest {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         
         InputStream oldIn = System.in;
-        System.setIn(new ByteArrayInputStream(String.format("Value%n").getBytes()));
+        System.setIn(new ByteArrayInputStream(String.format("Value%nSecret%n").getBytes()));
         PrintStream oldOut = System.out;
         System.setOut(new PrintStream(out));
         
         ConsolePaper subject = new ConsolePaper();
-        this.form.printOn(subject);
+        new Form("Test Form",
+                 "Test Description",
+                 new Fields(new Field("Test Field")))
+            .printOn(subject);
         subject.askForInput();
         
         assertEquals(String.format("Test Form%n" +
@@ -69,7 +76,7 @@ public final class ConsolePaperTest {
     
     @Test
     public void write() throws Exception {
-        this.console.useAsInput("");
+        this.console.useAsInput("", "");
         this.form.write("Test Field", "Pre-Filled Value");
         this.form.printOn(subject);
         
@@ -78,7 +85,8 @@ public final class ConsolePaperTest {
         this.console.hasOutput("Test Form%n" +
                                "Test Description%n" +
                                "%n" +
-                               "Test Field (Currently 'Pre-Filled Value'): %n");
+                               "Test Field (Currently 'Pre-Filled Value'): %n" +
+                               "Secret Field: ***%n");
         
         this.form.onSubmit(fields -> assertEquals("Pre-Filled Value", fields.get("Test Field")));
         this.form.submit();

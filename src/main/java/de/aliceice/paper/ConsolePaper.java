@@ -49,13 +49,8 @@ public final class ConsolePaper implements Paper {
     public void askForInput() {
         this.fieldDescriptions.keySet()
                               .forEach(field -> {
-                                  this.console.printf(getPromptTemplate(field),
-                                                      field,
-                                                      this.fieldValues.get(field));
-            
-                                  String value = this.console.readLine();
                                   this.fieldValues.merge(field,
-                                                         value,
+                                                         getInput(field),
                                                          (oldValue, newValue) -> newValue.isEmpty()
                                                                                  ? oldValue
                                                                                  : newValue);
@@ -70,6 +65,15 @@ public final class ConsolePaper implements Paper {
         this.console = console;
         this.fieldDescriptions = new LinkedHashMap<>();
         this.fieldValues = new HashMap<>();
+    }
+    
+    private String getInput(String field) {
+        String prompt = String.format(getPromptTemplate(field),
+                                      field,
+                                      this.fieldValues.get(field));
+        return this.fieldDescriptions.get(field).contains("Secret")
+               ? this.console.readSecret(prompt)
+               : this.console.readLine(prompt);
     }
     
     private String getPromptTemplate(String field) {

@@ -29,8 +29,16 @@ public final class TestConsole implements Console {
     
     @Override
     public String readLine(String format, Object... args) {
-        this.output.append(String.format(format, args))
-                   .append(this.inputLines.peekFirst())
+        printf(format, args);
+        this.output.append(this.inputLines.peekFirst())
+                   .append(System.lineSeparator());
+        return this.inputLines.pollFirst();
+    }
+    
+    @Override
+    public String readSecret(String format, Object... args) {
+        printf(format, args);
+        this.output.append("***")
                    .append(System.lineSeparator());
         return this.inputLines.pollFirst();
     }

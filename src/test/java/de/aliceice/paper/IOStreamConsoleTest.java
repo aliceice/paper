@@ -39,4 +39,12 @@ public final class IOStreamConsoleTest {
         assertEquals("Input", subject.readLine());
     }
     
+    @Test
+    public void readSecret() throws Exception {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        IOStreamConsole subject = new IOStreamConsole(new ByteArrayInputStream("Secret".getBytes()), out);
+        assertEquals("Secret", subject.readSecret());
+        assertEquals(String.format("WARNING: I/O Stream Console can't hide secrets. All input will be visible.%n"),
+                     out.toString());
+    }
 }
