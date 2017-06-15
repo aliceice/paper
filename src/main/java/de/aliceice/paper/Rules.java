@@ -17,7 +17,7 @@ public final class Rules {
                          .anyMatch(rule -> rule.isNotValid(value));
     }
     
-    public Rules(Rule[] rules) {
+    public Rules(Rule... rules) {
         this.rules = Arrays.asList(rules);
     }
     
