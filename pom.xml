@@ -8,6 +8,8 @@
     <artifactId>paper</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <packaging>bundle</packaging>
+
     <name>Paper</name>
     <description>A simple form framework</description>
     <url>http://github.com/aliceice/paper</url>
@@ -51,6 +53,7 @@
         <versions.build.jacoco-maven-plugin>0.7.9</versions.build.jacoco-maven-plugin>
         <versions.build.japicmp-maven-plugin>0.10.0</versions.build.japicmp-maven-plugin>
         <versions.build.junit-surefire-provider>1.0.0-M4</versions.build.junit-surefire-provider>
+        <versions.build.maven-bundle-plugin>3.0.1</versions.build.maven-bundle-plugin>
         <versions.build.maven-checkstyle-plugin>2.17</versions.build.maven-checkstyle-plugin>
         <versions.build.maven-compiler-plugin>3.6.0</versions.build.maven-compiler-plugin>
         <versions.build.maven-deploy-plugin>2.8.2</versions.build.maven-deploy-plugin>
@@ -78,7 +81,7 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
     </dependencies>
 
@@ -89,6 +92,11 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>${versions.build.maven-compiler-plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.felix</groupId>
+                    <artifactId>maven-bundle-plugin</artifactId>
+                    <version>${versions.build.maven-bundle-plugin}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -156,6 +164,11 @@
                     <source>${versions.java}</source>
                     <target>${versions.java}</target>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <extensions>true</extensions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -303,7 +316,6 @@
                         <configuration>
                             <serverId>oss.sonatype.org</serverId>
                             <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                            <description>${project.version}</description>
                         </configuration>
                         <executions>
                             <execution>
