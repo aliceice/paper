@@ -31,8 +31,12 @@ public class Field {
     }
     
     public Field(String name, Rule... rules) {
+        this(name, new Rules(rules));
+    }
+    
+    public Field(String name, Rules rules) {
         this.name = name;
-        this.rules = new Rules(rules);
+        this.rules = rules;
         this.text = "";
     }
     
