@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public final class IOStreamConsoleTest {
     
@@ -28,9 +29,14 @@ public final class IOStreamConsoleTest {
         ByteArrayOutputStream err = new ByteArrayOutputStream();
         Console subject = new IOStreamConsole(new ByteArrayOutputStream(), err);
         
-        subject.printErr("An error occurred: %s", "Error");
+        subject.printErr(new Exception(), "An error occurred: %s", "Error");
         
-        assertEquals("An error occurred: Error", err.toString());
+        assertTrue(err.toString()
+                      .contains(String.format("An error occurred: Error" +
+                                              "%n" +
+                                              "%n" +
+                                              "java.lang.Exception%n" +
+                                              "\tat de.aliceice.paper.IOStreamConsoleTest")));
     }
     
     @Test

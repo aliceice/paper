@@ -14,7 +14,7 @@ public final class IOStreamConsole implements Console {
     
     @Override
     public void println(String line) {
-        this.out.println(line);
+        printf(line + "%n");
     }
     
     @Override
