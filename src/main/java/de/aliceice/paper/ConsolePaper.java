@@ -27,7 +27,7 @@ public final class ConsolePaper implements Paper {
     
     @Override
     public void markAsInvalid() {
-        this.console.println("There are errors on the form:");
+        this.console.printErr(String.format("There are errors on the form:%n"));
     }
     
     @Override
